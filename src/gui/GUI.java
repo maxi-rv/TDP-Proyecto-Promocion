@@ -28,6 +28,7 @@ public class GUI
 	
 	protected JFrame frmCalculadorasimple;
 	
+	protected JButton btnOperacion;
 	protected JTextField textFieldNumero1;
 	protected JTextField textFieldNumero2;
 	protected JTextField textFieldResultado;
@@ -109,6 +110,8 @@ public class GUI
 				iniciarListaDesplegable();
 				
 				reiniciarTextBoxes();
+				
+				btnOperacion.setEnabled(false);
 			}
 		});
 		panel.add(btnActualizar);
@@ -119,28 +122,43 @@ public class GUI
 		panel.add(listaDesplegableOperaciones);
 		
 		//INICIALIZA BOTON DE OPERACION
-		JButton btnOperacion = new JButton("Realizar Operacion");
+		btnOperacion = new JButton("Realizar Operacion");
 		btnOperacion.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnOperacion.setBounds(200, 227, 200, 23);
+		btnOperacion.setEnabled(false);
 		btnOperacion.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				String nombrePlugin = String.valueOf(listaDesplegableOperaciones.getSelectedItem());
 				Integer resultado;
-				int param1 = Integer.parseInt(textFieldNumero1.getText());
-				int param2 = Integer.parseInt(textFieldNumero2.getText());
 				
-				try 
-				{
-					resultado = calculadora.realizarOperacion(nombrePlugin, param1, param2);
-					textFieldResultado.setText(Integer.toString(resultado));
-				} 
-				catch (NumberFormatException | PluginException | OperacionException e) 
+				int param1 = 0;
+				int param2 = 0;
+				
+				if(textFieldNumero1.getText().length()==0 || textFieldNumero2.getText().length()==0)
 				{
 					JFrame f = new JFrame();  
-					JOptionPane.showMessageDialog(f,e.getMessage());
+					JOptionPane.showMessageDialog(f, "Por favor, inserte numeros enteros para realizar operaciones.");
 				}
+				else
+				{
+					param1 = Integer.parseInt(textFieldNumero1.getText());
+					param2 = Integer.parseInt(textFieldNumero2.getText());
+					
+					try 
+					{
+						resultado = calculadora.realizarOperacion(nombrePlugin, param1, param2);
+						textFieldResultado.setText(Integer.toString(resultado));
+					} 
+					catch (PluginException | OperacionException e) 
+					{
+						JFrame f = new JFrame();  
+						JOptionPane.showMessageDialog(f,e.getMessage());
+					}
+				}
+				
+				
 			}
 		});
 		panel.add(btnOperacion);

@@ -70,6 +70,9 @@ public class Calculadora
 	
 	public int realizarOperacion(String nombre, int param1, int param2) throws PluginException, OperacionException
 	{
+		if(plugins.size()==0)
+			throw new PluginException("No hay plugins cargados.");
+		
 		int toReturn;
 		PluginInterface plugin = getOperacion(nombre);
 		plugin.setParametros(param1, param2);
