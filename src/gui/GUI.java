@@ -90,20 +90,20 @@ public class GUI
 		
 		textFieldNumero2 = new JTextField();
 		textFieldNumero2.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldNumero2.setBounds(324, 159, 270, 20);
+		textFieldNumero2.setBounds(324, 171, 270, 20);
 		panel.add(textFieldNumero2);
 		textFieldNumero2.setColumns(10);
 		
 		textFieldNumero1 = new JTextField();
 		textFieldNumero1.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldNumero1.setBounds(10, 159, 270, 20);
+		textFieldNumero1.setBounds(10, 171, 270, 20);
 		panel.add(textFieldNumero1);
 		textFieldNumero1.setColumns(10);
 		
 		//INICIALIZA BOTON CARGA DE PLUGINS
 		JButton btnActualizar = new JButton("Actualizar/Cargar Operaciones");
 		btnActualizar.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnActualizar.setBounds(160, 11, 300, 23);
+		btnActualizar.setBounds(160, 23, 300, 23);
 		btnActualizar.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0) 
@@ -111,18 +111,20 @@ public class GUI
 				iniciarCalculadora();
 				
 				iniciarListaDesplegable();
+				
+				reiniciarTextBoxes();
 			}
 		});
 		panel.add(btnActualizar);
 		
 		listaDesplegableOperaciones = new JComboBox<String>();
-		listaDesplegableOperaciones.setBounds(230, 68, 315, 20);
+		listaDesplegableOperaciones.setBounds(65, 80, 480, 20);
 		panel.add(listaDesplegableOperaciones);
 		
 		//INICIALIZA BOTON DE OPERACION
 		JButton btnOperacion = new JButton("Realizar Operacion");
 		btnOperacion.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnOperacion.setBounds(200, 215, 200, 23);
+		btnOperacion.setBounds(200, 227, 200, 23);
 		btnOperacion.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0) 
@@ -149,7 +151,7 @@ public class GUI
 		textFieldResultado = new JTextField();
 		textFieldResultado.setEditable(false);
 		textFieldResultado.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldResultado.setBounds(10, 294, 584, 20);
+		textFieldResultado.setBounds(10, 306, 584, 20);
 		panel.add(textFieldResultado);
 		textFieldResultado.setColumns(10);
 		
@@ -159,7 +161,7 @@ public class GUI
 		lblNumero1.setVerticalAlignment(SwingConstants.TOP);
 		lblNumero1.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNumero1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNumero1.setBounds(10, 141, 270, 38);
+		lblNumero1.setBounds(10, 153, 270, 38);
 		panel.add(lblNumero1);
 		
 		JLabel lblNumero2 = new JLabel("Inserte el 2\u00B0 Numero:");
@@ -168,7 +170,7 @@ public class GUI
 		lblNumero2.setVerticalAlignment(SwingConstants.TOP);
 		lblNumero2.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNumero2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNumero2.setBounds(324, 141, 270, 38);
+		lblNumero2.setBounds(324, 153, 270, 38);
 		panel.add(lblNumero2);
 		
 		JLabel lblResultado = new JLabel("Resultado:");
@@ -177,15 +179,8 @@ public class GUI
 		lblResultado.setVerticalAlignment(SwingConstants.TOP);
 		lblResultado.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblResultado.setHorizontalAlignment(SwingConstants.CENTER);
-		lblResultado.setBounds(10, 277, 584, 37);
+		lblResultado.setBounds(10, 289, 584, 37);
 		panel.add(lblResultado);
-		
-		JLabel lblElegirOperacion = new JLabel("Elija la Operacion a realizar:");
-		lblElegirOperacion.setForeground(SystemColor.textHighlight);
-		lblElegirOperacion.setHorizontalAlignment(SwingConstants.CENTER);
-		lblElegirOperacion.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblElegirOperacion.setBounds(10, 70, 259, 14);
-		panel.add(lblElegirOperacion);
 	}
 	
 	protected void iniciarCalculadora() 
@@ -206,7 +201,7 @@ public class GUI
 	{
 		listaDesplegableOperaciones.removeAllItems();
 		
-		listaDesplegableOperaciones.addItem("Seleccione operacion");
+		listaDesplegableOperaciones.addItem("Seleccione la Operacion a realizar");
 		
 		List<String> operaciones = calculadora.getNombresOperaciones();
 		
@@ -214,5 +209,12 @@ public class GUI
 		{
 			listaDesplegableOperaciones.addItem(nombre);			
 		}
+	}
+	
+	protected void reiniciarTextBoxes()
+	{
+		textFieldNumero1.setText("");
+		textFieldNumero2.setText("");
+		textFieldResultado.setText("");
 	}
 }
