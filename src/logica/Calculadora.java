@@ -82,7 +82,7 @@ public class Calculadora
 		return toReturn;
 	}
 	
-	public List<String> getNombresOperaciones()
+	public List<String> getNombresOperaciones() throws PluginException
 	{
 		List<String> nombresOperaciones = new ArrayList<String>();
 		
@@ -90,6 +90,9 @@ public class Calculadora
 		{
 			nombresOperaciones.add(plugin.getNombre());
 		}
+		
+		if(nombresOperaciones.size() == 0) 
+			throw new PluginException("No se encontraron plugins.");
 		
 		return nombresOperaciones;
 	}

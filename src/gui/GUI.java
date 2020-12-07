@@ -62,10 +62,6 @@ public class GUI
 	public GUI() 
 	{
 		initialize();
-		
-		iniciarCalculadora();
-		
-		iniciarListaDesplegable();
 	}
 
 	/**
@@ -119,6 +115,7 @@ public class GUI
 		
 		listaDesplegableOperaciones = new JComboBox<String>();
 		listaDesplegableOperaciones.setBounds(65, 80, 480, 20);
+		listaDesplegableOperaciones.addItem("Actualize/Carge Plugins para comenzar");
 		panel.add(listaDesplegableOperaciones);
 		
 		//INICIALIZA BOTON DE OPERACION
@@ -203,7 +200,18 @@ public class GUI
 		
 		listaDesplegableOperaciones.addItem("Seleccione la Operacion a realizar");
 		
-		List<String> operaciones = calculadora.getNombresOperaciones();
+		List<String> operaciones = null;
+		
+		try 
+		{
+			operaciones = calculadora.getNombresOperaciones();
+		} 
+		catch (PluginException e) 
+		{
+			JFrame f = new JFrame();  
+			JOptionPane.showMessageDialog(f,e.getMessage());
+			System.exit(1);
+		}
 		
 		for (String nombre : operaciones)
 		{
