@@ -111,7 +111,7 @@ public class GUI
 				
 				reiniciarTextBoxes();
 				
-				btnOperacion.setEnabled(false);
+				btnOperacion.setEnabled(true);
 			}
 		});
 		panel.add(btnActualizar);
