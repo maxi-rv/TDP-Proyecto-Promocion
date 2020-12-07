@@ -1,6 +1,6 @@
 package logica;
 
-public class Suma implements PluginInterface 
+public class Division implements PluginInterface 
 {
 	//ATRIBUTOS
 	protected int parametro1;
@@ -16,13 +16,19 @@ public class Suma implements PluginInterface
 	@Override
 	public int operar() throws OperacionException 
 	{
-		return parametro1+parametro2;
+		if(parametro2==0)
+			throw new OperacionException("No se puede dividir por cero.");
+			
+		if(parametro1<parametro2)
+			throw new OperacionException("No se puede realizar una division entera si el divisor es mayor al dividendo.");
+		
+		return parametro1/parametro2;
 	}
 
 	@Override
 	public String getNombre() 
 	{
-		return "Suma";
+		return "Divison";
 	}
 
 	@Override

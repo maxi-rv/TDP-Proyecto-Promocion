@@ -3,7 +3,7 @@ package logica;
 public interface PluginInterface 
 {
 	// let the application pass in a parameter
-	public void setParametros (int param1, int param2);
+	public void setParametros(int param1, int param2);
 
 	// retrieve a result from the plugin
 	public int operar() throws OperacionException;

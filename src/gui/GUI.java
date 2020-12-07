@@ -27,11 +27,12 @@ public class GUI
 	protected Calculadora calculadora;
 	
 	protected JFrame frmCalculadorasimple;
-	protected JTextField textFieldNumero2;
+	
 	protected JTextField textFieldNumero1;
+	protected JTextField textFieldNumero2;
 	protected JTextField textFieldResultado;
 	
-	protected JComboBox listaDesplegableOperaciones;
+	protected JComboBox<String> listaDesplegableOperaciones;
 
 	/**
 	 * Launch the application.
@@ -129,7 +130,7 @@ public class GUI
 				String nombrePlugin = String.valueOf(listaDesplegableOperaciones.getSelectedItem());
 				Integer resultado;
 				int param1 = Integer.parseInt(textFieldNumero1.getText());
-				int param2 = Integer.parseInt(textFieldNumero1.getText());
+				int param2 = Integer.parseInt(textFieldNumero2.getText());
 				
 				try 
 				{
@@ -203,11 +204,15 @@ public class GUI
 	
 	protected void iniciarListaDesplegable() 
 	{
+		listaDesplegableOperaciones.removeAllItems();
+		
+		listaDesplegableOperaciones.addItem("Seleccione operacion");
+		
 		List<String> operaciones = calculadora.getNombresOperaciones();
 		
 		for (String nombre : operaciones)
 		{
-			listaDesplegableOperaciones.add(new JButton(nombre));			
+			listaDesplegableOperaciones.addItem(nombre);			
 		}
 	}
 }

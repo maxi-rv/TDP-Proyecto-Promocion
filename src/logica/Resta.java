@@ -1,6 +1,6 @@
 package logica;
 
-public class Suma implements PluginInterface 
+public class Resta implements PluginInterface 
 {
 	//ATRIBUTOS
 	protected int parametro1;
@@ -16,13 +16,13 @@ public class Suma implements PluginInterface
 	@Override
 	public int operar() throws OperacionException 
 	{
-		return parametro1+parametro2;
+		return parametro1-parametro2;
 	}
 
 	@Override
 	public String getNombre() 
 	{
-		return "Suma";
+		return "Resta";
 	}
 
 	@Override

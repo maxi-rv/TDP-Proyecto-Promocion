@@ -1,6 +1,6 @@
 package logica;
 
-public class Suma implements PluginInterface 
+public class Potencia implements PluginInterface 
 {
 	//ATRIBUTOS
 	protected int parametro1;
@@ -16,13 +16,16 @@ public class Suma implements PluginInterface
 	@Override
 	public int operar() throws OperacionException 
 	{
-		return parametro1+parametro2;
+		if(parametro2<0)
+			throw new OperacionException("Las potencias negativas no pueden realizarse.");
+		
+		return (int) Math.pow(parametro1, parametro2);
 	}
 
 	@Override
 	public String getNombre() 
 	{
-		return "Suma";
+		return "Potencia";
 	}
 
 	@Override

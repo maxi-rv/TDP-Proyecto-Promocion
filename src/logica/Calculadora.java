@@ -1,6 +1,7 @@
 package logica;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -8,15 +9,17 @@ import java.util.List;
 public class Calculadora 
 {
 	//The directory where we keep the plugin classes
-	String pluginsDir;
+	protected String pluginsDir;
 
 	//A list where we keep an initialized object of each plugin class
-	List<PluginInterface> plugins;
+	protected List<PluginInterface> plugins;
 
 	
 	//CONSTRUCTOR
-	public Calculadora () throws PluginException 
+	public Calculadora() throws PluginException 
 	{
+		pluginsDir = "/plugs";
+				
 		plugins = new ArrayList<PluginInterface>();
 		
 		this.getPlugins();
@@ -40,25 +43,24 @@ public class Calculadora
 				try 
 				{
 					// only consider files ending in ".class"
-					if (!files[i].endsWith(".class"))
-						continue;
-
-					Class c = cl.loadClass(files[i].substring(0, files[i].indexOf(".")));
-					
-					Class[] intf = c.getInterfaces();
-					
-					for (int j=0; j<intf.length; j++) 
+					if (files[i].endsWith(".class"))
 					{
-						if (intf[j].getName().equals("PluginFunction")) 
+						Class c = cl.loadClass("logica."+files[i].substring(0, files[i].indexOf(".")));
+						
+						Class[] intf = c.getInterfaces();
+						
+						for (int j=0; j<intf.length; j++) 
 						{
-							// the following line assumes that PluginFunction has a no-argument constructor
-							PluginInterface pf = (PluginInterface) c.newInstance();
-							plugins.add(pf);
-							continue;
+							if (intf[j].getName().equals("logica.PluginInterface")) 
+							{
+								// the following line assumes that PluginFunction has a no-argument constructor
+								PluginInterface pf = (PluginInterface) c.getDeclaredConstructor().newInstance();
+								plugins.add(pf);
+							}
 						}
 					}
 				} 
-				catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) 
+				catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) 
 				{
 					throw new PluginException("File "+ files[i] +" does not contain a valid Plugin class.");
 				}
@@ -80,7 +82,24 @@ public class Calculadora
 		return toReturn;
 	}
 	
-	private PluginInterface getOperacion(String nombre) throws PluginException 
+	public List<String> getNombresOperaciones()
+	{
+		List<String> nombresOperaciones = new ArrayList<String>();
+		
+		for (PluginInterface plugin : plugins)
+		{
+			nombresOperaciones.add(plugin.getNombre());
+		}
+		
+		return nombresOperaciones;
+	}
+	
+	public int cantOperaciones()
+	{
+		return plugins.size();
+	}
+	
+	protected PluginInterface getOperacion(String nombre) throws PluginException 
 	{
 		Iterator<PluginInterface> it = plugins.iterator();
 		boolean encontrado = false; 
@@ -99,23 +118,4 @@ public class Calculadora
 		
 		return plugin;
 	}
-	
-	public List<String> getNombresOperaciones()
-	{
-		List<String> nombresOperaciones = new ArrayList<String>();
-		
-		for (PluginInterface plugin : plugins)
-		{
-			nombresOperaciones.add(plugin.getNombre());
-		}
-		
-		return nombresOperaciones;
-	}
-	
-	public int cantOperaciones()
-	{
-		return plugins.size();
-	}
-	
-	
 }
