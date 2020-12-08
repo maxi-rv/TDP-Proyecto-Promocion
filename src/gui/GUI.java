@@ -216,8 +216,6 @@ public class GUI
 	{
 		listaDesplegableOperaciones.removeAllItems();
 		
-		listaDesplegableOperaciones.addItem("Seleccione la Operacion a realizar");
-		
 		List<String> operaciones = null;
 		
 		try 
