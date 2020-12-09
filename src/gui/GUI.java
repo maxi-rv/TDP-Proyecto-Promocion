@@ -101,6 +101,7 @@ public class GUI
 		JButton btnActualizar = new JButton("Actualizar/Cargar Operaciones");
 		btnActualizar.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnActualizar.setBounds(160, 23, 300, 23);
+		
 		btnActualizar.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0) 
@@ -114,6 +115,7 @@ public class GUI
 				btnOperacion.setEnabled(true);
 			}
 		});
+		
 		panel.add(btnActualizar);
 		
 		listaDesplegableOperaciones = new JComboBox<String>();
