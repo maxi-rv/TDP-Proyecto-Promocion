@@ -14,7 +14,7 @@ public class Suma implements PluginInterface
 	}
 
 	@Override
-	public int operar() throws OperacionException 
+	public float operar() throws OperacionException 
 	{
 		return parametro1+parametro2;
 	}

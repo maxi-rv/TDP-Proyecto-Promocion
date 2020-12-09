@@ -6,7 +6,7 @@ public interface PluginInterface
 	public void setParametros(int param1, int param2);
 
 	// retrieve a result from the plugin
-	public int operar() throws OperacionException;
+	public float operar() throws OperacionException;
 
 	// return the name of this plugin
 	public String getNombre();

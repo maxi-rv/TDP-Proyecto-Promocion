@@ -133,7 +133,7 @@ public class GUI
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				String nombrePlugin = String.valueOf(listaDesplegableOperaciones.getSelectedItem());
-				Integer resultado;
+				Float resultado;
 				
 				int param1 = 0;
 				int param2 = 0;
@@ -151,7 +151,7 @@ public class GUI
 					try 
 					{
 						resultado = calculadora.realizarOperacion(nombrePlugin, param1, param2);
-						textFieldResultado.setText(Integer.toString(resultado));
+						textFieldResultado.setText(Float.toString(resultado));
 					} 
 					catch (PluginException | OperacionException e) 
 					{

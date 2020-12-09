@@ -14,7 +14,7 @@ public class Potencia implements PluginInterface
 	}
 
 	@Override
-	public int operar() throws OperacionException 
+	public float operar() throws OperacionException 
 	{
 		if(parametro2<0)
 			throw new OperacionException("Las potencias negativas no pueden realizarse.");

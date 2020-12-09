@@ -14,15 +14,12 @@ public class Division implements PluginInterface
 	}
 
 	@Override
-	public int operar() throws OperacionException 
+	public float operar() throws OperacionException 
 	{
 		if(parametro2==0)
 			throw new OperacionException("No se puede dividir por cero.");
 			
-		if(parametro1<parametro2)
-			throw new OperacionException("No se puede realizar una division entera si el divisor es mayor al dividendo.");
-		
-		return parametro1/parametro2;
+		return (float)parametro1/parametro2;
 	}
 
 	@Override
