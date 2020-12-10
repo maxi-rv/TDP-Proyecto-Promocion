@@ -14,24 +14,15 @@ public class Potencia implements PluginInterface
 	}
 
 	@Override
-	public float operar() throws OperacionException 
+	public float operar() 
 	{
-		if(parametro2<0)
-			throw new OperacionException("Las potencias negativas no pueden realizarse.");
-		
-		return (int) Math.pow(parametro1, parametro2);
+		return (float) Math.pow(parametro1, parametro2);
 	}
 
 	@Override
 	public String getNombre() 
 	{
 		return "Potencia";
-	}
-
-	@Override
-	public boolean tieneError() 
-	{
-		return false;
 	}
 
 }

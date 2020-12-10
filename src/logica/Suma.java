@@ -25,10 +25,4 @@ public class Suma implements PluginInterface
 		return "Suma";
 	}
 
-	@Override
-	public boolean tieneError() 
-	{
-		return false;
-	}
-
 }

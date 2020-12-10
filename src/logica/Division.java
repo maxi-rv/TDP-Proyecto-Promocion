@@ -28,10 +28,4 @@ public class Division implements PluginInterface
 		return "Divison";
 	}
 
-	@Override
-	public boolean tieneError() 
-	{
-		return false;
-	}
-
 }

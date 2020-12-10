@@ -11,75 +11,62 @@ import javax.swing.JOptionPane;
 
 public class Calculadora 
 {
-	//The directory where we keep the plugin classes
-	protected String pluginsDir;
-
 	//A list where we keep an initialized object of each plugin class
 	protected List<PluginInterface> plugins;
+	
+	protected File dir;
 
 	
 	//CONSTRUCTOR
 	public Calculadora() throws PluginException 
 	{
-		pluginsDir = "plugins";
-				
-		plugins = new ArrayList<PluginInterface>();
+		dir = new File("./plugins");
 		
-		this.getPlugins();
+		plugins = new ArrayList<PluginInterface>();
 	}
 	
 	//METODOS
 	public void getPlugins() throws PluginException 
 	{
-		//ALTENATIVA 1
-		//File dir = new File(System.getProperty("user.dir")+File.separator+pluginsDir);
-		
-		//ALTERNATIVA 2
-		File jarDir = new File(ClassLoader.getSystemClassLoader().getResource(".").getPath());
-		String ruta = jarDir.getPath();	//.replace("%20", " ");
-		File dir = new File(ruta+File.separator+pluginsDir);
-		
-		//Muestra la direccion obtenia en un mensaje
-		JFrame f = new JFrame();
-		JOptionPane.showMessageDialog(f, dir.getPath());
-		
 		ClassLoader cl = new PluginClassLoader(dir);
+		String[] files = dir.list();
 		
-		if (dir.exists() && dir.isDirectory()) 
+		if (files!=null) 
 		{
 			// we'll only load classes directly in this directory -
 			// no subdirectories, and no classes in packages are recognized
-			String[] files = dir.list();
 			
 			for (int i=0; i<files.length; i++) 
 			{
 				try 
 				{
 					// only consider files ending in ".class"
-					if (files[i].endsWith(".class"))
+					if (! files[i].endsWith(".class"))
+						continue;
+
+					Class c = cl.loadClass(files[i].substring(0, files[i].indexOf(".")));
+					Class[] intf = c.getInterfaces();
+					
+					for (int j=0; j<intf.length; j++) 
 					{
-						Class c = cl.loadClass("logica."+files[i].substring(0, files[i].indexOf(".")));
-						
-						Class[] intf = c.getInterfaces();
-						
-						for (int j=0; j<intf.length; j++) 
+						if (intf[j].getName().contentEquals("logica.PluginInterface")) 
 						{
-							if (intf[j].getName().equals("logica.PluginInterface")) 
-							{
-								// the following line assumes that PluginFunction has a no-argument constructor
-								PluginInterface pf = (PluginInterface) c.getDeclaredConstructor().newInstance();
-								plugins.add(pf);
-							}
+							// the following line assumes that PluginFunction has a no-argument constructor
+							PluginInterface pf = (PluginInterface) c.newInstance();
+							plugins.add(pf);
+							continue;
 						}
 					}
 				} 
-				catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) 
+				catch (Exception ex) 
 				{
-					throw new PluginException("File "+ files[i] +" does not contain a valid Plugin class.");
+					throw new PluginException("File "+ files[i] +" does not contain a valid PluginInterface class.");
 				}
 			}
 		}
 	}
+	
+	
 	
 	public float realizarOperacion(String nombre, int param1, int param2) throws PluginException, OperacionException
 	{
@@ -91,9 +78,6 @@ public class Calculadora
 		plugin.setParametros(param1, param2);
 		
 		toReturn = plugin.operar();
-		
-		if(plugin.tieneError())
-			throw new PluginException("Error en el plugin.");
 		
 		return toReturn;
 	}
@@ -111,11 +95,6 @@ public class Calculadora
 			throw new PluginException("No se encontraron plugins.");
 		
 		return nombresOperaciones;
-	}
-	
-	public int cantOperaciones()
-	{
-		return plugins.size();
 	}
 	
 	protected PluginInterface getOperacion(String nombre) throws PluginException 

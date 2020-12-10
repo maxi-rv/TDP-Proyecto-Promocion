@@ -25,10 +25,4 @@ public class Resta implements PluginInterface
 		return "Resta";
 	}
 
-	@Override
-	public boolean tieneError() 
-	{
-		return false;
-	}
-
 }

@@ -10,8 +10,4 @@ public interface PluginInterface
 
 	// return the name of this plugin
 	public String getNombre();
-
-	// can be called to determine whether the plugin
-	// aborted execution due to an error condition
-	public boolean tieneError();
 }

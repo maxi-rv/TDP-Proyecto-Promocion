@@ -111,8 +111,6 @@ public class GUI
 				iniciarListaDesplegable();
 				
 				reiniciarTextBoxes();
-				
-				btnOperacion.setEnabled(true);
 			}
 		});
 		
@@ -145,8 +143,16 @@ public class GUI
 				}
 				else
 				{
-					param1 = Integer.parseInt(textFieldNumero1.getText());
-					param2 = Integer.parseInt(textFieldNumero2.getText());
+					try 
+					{
+						param1 = Integer.parseInt(textFieldNumero1.getText());
+						param2 = Integer.parseInt(textFieldNumero2.getText());
+					} 
+					catch (NumberFormatException e1) 
+					{
+						JFrame f = new JFrame();  
+						JOptionPane.showMessageDialog(f, "Por favor, ingrese numeros enteros.");
+					}
 					
 					try 
 					{
@@ -205,6 +211,7 @@ public class GUI
 		try 
 		{
 			calculadora = new Calculadora();
+			calculadora.getPlugins();
 		} 
 		catch (PluginException e) 
 		{
@@ -223,18 +230,21 @@ public class GUI
 		try 
 		{
 			operaciones = calculadora.getNombresOperaciones();
+			
+			for (String nombre : operaciones)
+			{
+				listaDesplegableOperaciones.addItem(nombre);			
+			}
+			
+			btnOperacion.setEnabled(true);
 		} 
 		catch (PluginException e) 
 		{
 			JFrame f = new JFrame();  
 			JOptionPane.showMessageDialog(f,e.getMessage());
-			System.exit(1);
 		}
 		
-		for (String nombre : operaciones)
-		{
-			listaDesplegableOperaciones.addItem(nombre);			
-		}
+		
 	}
 	
 	protected void reiniciarTextBoxes()
