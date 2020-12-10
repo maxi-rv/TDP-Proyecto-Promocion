@@ -147,22 +147,22 @@ public class GUI
 					{
 						param1 = Integer.parseInt(textFieldNumero1.getText());
 						param2 = Integer.parseInt(textFieldNumero2.getText());
+						
+						try 
+						{
+							resultado = calculadora.realizarOperacion(nombrePlugin, param1, param2);
+							textFieldResultado.setText(Float.toString(resultado));
+						} 
+						catch (PluginException | OperacionException e) 
+						{
+							JFrame f = new JFrame();  
+							JOptionPane.showMessageDialog(f,e.getMessage());
+						}
 					} 
 					catch (NumberFormatException e1) 
 					{
 						JFrame f = new JFrame();  
 						JOptionPane.showMessageDialog(f, "Por favor, ingrese numeros enteros.");
-					}
-					
-					try 
-					{
-						resultado = calculadora.realizarOperacion(nombrePlugin, param1, param2);
-						textFieldResultado.setText(Float.toString(resultado));
-					} 
-					catch (PluginException | OperacionException e) 
-					{
-						JFrame f = new JFrame();  
-						JOptionPane.showMessageDialog(f,e.getMessage());
 					}
 				}
 				
