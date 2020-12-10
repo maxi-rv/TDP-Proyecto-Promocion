@@ -60,7 +60,7 @@ public class Calculadora
 				} 
 				catch (Exception ex) 
 				{
-					throw new PluginException("File "+ files[i] +" does not contain a valid PluginInterface class.");
+					throw new PluginException("El archivo "+ files[i] +" no contiene una clase PluginInterface valida.");
 				}
 			}
 		}
