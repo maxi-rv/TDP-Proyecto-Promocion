@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 public class Calculadora 
 {
 	//The directory where we keep the plugin classes
@@ -18,7 +21,7 @@ public class Calculadora
 	//CONSTRUCTOR
 	public Calculadora() throws PluginException 
 	{
-		pluginsDir = "/plugs";
+		pluginsDir = "plugins";
 				
 		plugins = new ArrayList<PluginInterface>();
 		
@@ -28,7 +31,17 @@ public class Calculadora
 	//METODOS
 	public void getPlugins() throws PluginException 
 	{
-		File dir = new File(System.getProperty("user.dir") + File.separator + pluginsDir);
+		//ALTENATIVA 1
+		File dir = new File(System.getProperty("user.dir")+File.separator+pluginsDir);
+		
+		//ALTERNATIVA 2
+		//File jarDir = new File(ClassLoader.getSystemClassLoader().getResource(".").getPath());
+		//String ruta = jarDir.getPath();	//.replace("%20", " ");
+		//File dir = new File(ruta+File.separator+pluginsDir);
+		
+		//Muestra la direccion obtenia en un mensaje
+		JFrame f = new JFrame();
+		JOptionPane.showMessageDialog(f, dir.getPath());
 		
 		ClassLoader cl = new PluginClassLoader(dir);
 		
