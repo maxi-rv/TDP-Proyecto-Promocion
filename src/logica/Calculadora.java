@@ -32,12 +32,12 @@ public class Calculadora
 	public void getPlugins() throws PluginException 
 	{
 		//ALTENATIVA 1
-		File dir = new File(System.getProperty("user.dir")+File.separator+pluginsDir);
+		//File dir = new File(System.getProperty("user.dir")+File.separator+pluginsDir);
 		
 		//ALTERNATIVA 2
-		//File jarDir = new File(ClassLoader.getSystemClassLoader().getResource(".").getPath());
-		//String ruta = jarDir.getPath();	//.replace("%20", " ");
-		//File dir = new File(ruta+File.separator+pluginsDir);
+		File jarDir = new File(ClassLoader.getSystemClassLoader().getResource(".").getPath());
+		String ruta = jarDir.getPath();	//.replace("%20", " ");
+		File dir = new File(ruta+File.separator+pluginsDir);
 		
 		//Muestra la direccion obtenia en un mensaje
 		JFrame f = new JFrame();
